@@ -1,0 +1,21 @@
+---
+
+- ansible.builtin.include_role: # Create folders
+    name: alex.remote.createfolders
+
+- ansible.builtin.include_role: # Copy File
+    name: alex.remote.copyfile
+
+- name: Install DEB file using apt
+  shell: |
+    {{ role_path }}/scripts/install.apt.sh "{{ args_ipaddress }}" "{{ args_username }}" "{{ args_password }}" "{{ args_target }}"
+    if [[ "$?" != "0" ]]; then
+      echo "Error executing script" 
+    fi
+  args:
+    executable: /bin/bash
+  register: expectresult
+  changed_when: '"Changed" in expectresult.stdout'
+  failed_when: '("Error" in expectresult.stdout) or ("Host key verification failed." in expectresult.stdout)'
+  connection: local
+  become: false

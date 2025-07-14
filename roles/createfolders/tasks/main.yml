@@ -1,0 +1,15 @@
+---
+
+- name: Create folders
+  shell: |
+    {{ role_path }}/scripts/create.folders.sh "{{ args_ipaddress }}" "{{ args_username }}" "{{ args_password }}"
+    if [[ "$?" != "0" ]]; then
+      echo "Error executing script" 
+    fi
+  args:
+    executable: /bin/bash
+  register: expectresult
+  changed_when: '"Changed" in expectresult.stdout'
+  failed_when: '("Error" in expectresult.stdout) or ("Host key verification failed." in expectresult.stdout)'
+  connection: local
+  become: false

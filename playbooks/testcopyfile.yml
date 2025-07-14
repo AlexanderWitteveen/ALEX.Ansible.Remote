@@ -1,0 +1,20 @@
+---
+
+- name: "Playbook: Test Copy File"
+  hosts: "{{ args_host }}"
+  gather_facts: false
+
+  vars_files:
+    - /etc/ansible/inventory/vars.yml
+
+  tasks:
+    - ansible.builtin.include_role: # Copy File
+        name: alex.remote.copyfile
+      vars:
+        args_ipaddress: "{{ prop_ipaddress }}"
+        args_username: "{{ prop_admin_username }}"
+        args_password: "{{ prop_admin_password }}"
+        args_source: "/mnt/d/DataDrive/sources-dev/deb/sudo/sudo_1.9.13p3-1+deb12u2_amd64.deb"
+        args_target: "/alex/sudo.deb"
+        # args_source: "README.md"
+        # args_target: "readme.md"

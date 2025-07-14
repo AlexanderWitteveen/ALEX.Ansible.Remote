@@ -1,6 +1,6 @@
 ---
 
-- name: "Playbook: Hello World"
+- name: "Playbook: Install Sudo"
   hosts: "{{ args_host }}"
   gather_facts: false
 
@@ -8,5 +8,5 @@
     - /etc/ansible/inventory/vars.yml
 
   tasks:
-    - ansible.builtin.include_role: # Hello World
-        name: alex.remote.helloworld
+    - ansible.builtin.include_role:
+        name: alex.remote.installsudo
